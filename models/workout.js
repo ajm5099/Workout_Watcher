@@ -6,19 +6,20 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const LibrarySchema = new Schema({
+const WorkoutSchema = new Schema({
   name: {
     type: String,
+    trim: true,
     unique: true
   },
-  books: [
+  exercise: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Book"
+      ref: "Exercise"
     }
   ]
 });
 
-const Library = mongoose.model("Library", LibrarySchema);
+const Workout = mongoose.model("Workout", WorkoutSchema);
 
-module.exports = Library;
+module.exports = Workout;

@@ -6,11 +6,30 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const BookSchema = new Schema({
-  author: String,
-  title: String
+const ExerciseSchema = new Schema({
+  name:{
+    type: String,
+    trim: true,
+    required: "Workout name is required"
+  },
+
+  type:{
+    type: String,
+    trim: true,
+    required: "Workout type is required"
+  },
+  
+  weight: Number,
+  
+  sets: Number,
+
+  reps: Number,
+
+  Duration: Number,
+
+  Distance: Number
 });
 
-const Book = mongoose.model("Book", BookSchema);
+const Exercise = mongoose.model("Exercise", ExerciseSchema);
 
-module.exports = Book;
+module.exports = Exercise;
