@@ -24,7 +24,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { u
 //TODO:write the route to create a new workout
 //TODO: Be sure to modify this route to be based on user input
 app.post("/workouts/add", (req, res) =>{
-    db.Workout.create( req.body.name )
+    db.Workout.create({ name: req.body.name })
     .then(dbWorkout => {
         res.json(dbWorkout);
     })
