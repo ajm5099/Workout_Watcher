@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3000;
 
 const db = require("./models");
+const { json } = require("express");
+const { Workout } = require("./models");
 
 const app = express();
 
@@ -21,9 +23,10 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { u
 //WORKOUT ROUTES
 //=========================================================================
 
-//TODO:write the route to create a new workout
+//route to create a new workout
 //TODO: Be sure to modify this route to be based on user input
 app.post("/workouts/add", (req, res) =>{
+    //Keep an eye on these curly braces when I start passing data with a nexercise
     db.Workout.create({ name: req.body.name })
     .then(dbWorkout => {
         res.json(dbWorkout);
@@ -34,7 +37,7 @@ app.post("/workouts/add", (req, res) =>{
 })
 
 
-//TODO:Write the route to get all workouts
+// route to get all workouts
 app.get("/workouts", (req, res) =>{
     db.Workout.find({})
     .then(dbWorkout => {
@@ -46,7 +49,20 @@ app.get("/workouts", (req, res) =>{
 });
 
 //TODO:Write the route to update the attributes of a specific workout
-app.put
+app.put("/workouts/:id", (req, res) => {
+    db.Workout.findOneAndUpdate({
+         name: req.body.name 
+        }, {
+            where:{
+                _id: req.params.id
+            }
+        }).then(dbWorkout => {
+        res.json(dbWorkout);
+    })
+    .catch(({err}) => {
+        res.json(err);
+    })
+})
 
 //TODO:Write the route to delete a specific workout
 app.delete("workout/:id", function(req, res) {

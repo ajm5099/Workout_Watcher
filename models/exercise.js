@@ -25,9 +25,9 @@ const ExerciseSchema = new Schema({
 
   reps: Number,
 
-  Duration: Number,
+  duration: Number,
 
-  Distance: Number
+  distance: Number
 });
 
 const Exercise = mongoose.model("Exercise", ExerciseSchema);
