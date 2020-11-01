@@ -24,7 +24,6 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { u
 //=========================================================================
 
 //route to create a new workout
-//TODO: Be sure to modify this route to be based on user input
 app.post("/workouts/add", (req, res) =>{
     //Keep an eye on these curly braces when I start passing data with a nexercise
     db.Workout.create({ name: req.body.name })
@@ -48,37 +47,12 @@ app.get("/workouts", (req, res) =>{
     });
 });
 
-//TODO:Write the route to update the attributes of a specific workout
-app.put("/workouts/:id", (req, res) => {
-    db.Workout.findOneAndUpdate({
-         name: req.body.name 
-        }, {
-            where:{
-                _id: req.params.id
-            }
-        }).then(dbWorkout => {
-        res.json(dbWorkout);
-    })
-    .catch(({err}) => {
-        res.json(err);
-    })
-})
-
-//TODO:Write the route to delete a specific workout
-app.delete("workout/:id", function(req, res) {
-        db.Workout.deleteOne({
-            where:{
-                _id:req.params.id
-            }
-        }).then(data=>{
-            if(data===0){
-                res.status(404).json(data)
-            }else {
-                res.json(data)
-            }
-        }).catch(err=>{
-            console.log(err);
-            res.status(500).json(err);
+//Write the route to delete a specific workout
+app.delete("/api/workouts", ({body}, res) => {
+        db.Workout.deleteOne({_id: body._id}, function(err){
+            if(err) throw err;
+            console.log("deleted sucessfully");
+            res.redirect("/")
         });
     });
 
@@ -108,8 +82,6 @@ app.get("/exercises", (req, res) =>{
         res.json(err);
     });
 });
-
-//TODO:Write the route to update the attributes of a specific exercise
 
 //TODO: START HERE, AND FINISH WRITING THIS FUNCTION!!!!!
 app.put("exercise/:id", function (req, res) {
