@@ -61,15 +61,25 @@ app.delete("/api/workouts", ({body}, res) => {
 //=========================================================================
 
 //TODO:write the route to create a new exercise
-app.post("/submit/exercise/:workoutid", ({body}, res) => {
-    db.Exercise.create(body)
-    .then(({_id}) => db.Workout.findOneAndUpdate({ _id:req.params.workoutid}, { $push: {exercise: _id} }, { new: true }))
+app.post("/api/exercises", ({body}, res) => {
+    const newObj = {
+        name: req.body.name,
+        type: req.body.type,
+        weight: req.body.weight,
+        sets: req.body.sets,
+        reps: req.body.reps,
+        duration: req.body.duration,
+        distance: req.body.distance
+    }
+    db.Exercise.create(newObj)
+    .then(({_id}) => db.Workout.findOneAndUpdate({_id: mongojs.ObjectId(req.params.id)}))
     .then(dbWorkout => {
         res.json(dbWorkout);
     })
     .catch(err => {
-        res.json(err);
-    });
+        console.log(err);
+        res.send(err);
+    })
 })
 
 //TODO:Write the route to get all exercises in a workout
@@ -80,24 +90,6 @@ app.get("/exercises", (req, res) =>{
     })
     .catch(err => {
         res.json(err);
-    });
-});
-
-//TODO: START HERE, AND FINISH WRITING THIS FUNCTION!!!!!
-app.put("exercise/:id", function (req, res) {
-    db.Exercise.update({
-        name: req.body.name,
-        type: req.body.type,
-        weight: req.body.weight,
-        sets: req.body.sets,
-        reps: req.body.reps,
-        duration: req.body.duration,
-        distance: req.bpody.distnace
-    }).then(function (dbExercise) {
-        res.json(dbExercise)
-    }).catch(err => {
-        console.log(err)
-        res.status(500).json(err);
     });
 });
 
