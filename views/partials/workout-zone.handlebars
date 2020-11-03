@@ -1,0 +1,10 @@
+{{#if exercises}}
+{{#each exercises}}
+<div id="{{_id}}">
+    <form id="{{_id}}">
+        <input type="text" value="{{name}}">
+        <p>sets<input type="number" value="{{sets}}"><input type="text" value="{{reps}}"</p>
+    </form>
+</div>
+{{/each}}
+{{/if}}

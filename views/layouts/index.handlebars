@@ -1,4 +1,4 @@
-<div class="workout-box">
+<div>
     {{#if workouts}}
     {{#each workouts}}
     <div class="workout-block" id="{{_id}}">
@@ -49,8 +49,10 @@
                     <label for="exercise-distance">How far should you go</label>
                     <input type="text" name="exercise-distance">
                 </div>
-
             </form>
         </div>
+        {{> workout-zone}}
     </div>
+    {{/each}}
+    {{/if}}
 </div>

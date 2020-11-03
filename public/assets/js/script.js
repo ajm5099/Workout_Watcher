@@ -1,9 +1,9 @@
 $(function () {
-
+console.log("something")
     //Creating a new workout
     $(".new-workout").on("submit", function (event) {
         event.preventDefault();
-
+        console.log("is this working")
         const newName = $("#new-workout").val().trim();
 
         $.ajax({
