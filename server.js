@@ -1,6 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const mongojs = require("mongojs")
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,94 +25,112 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { u
 //=========================================================================
 
 //route to create a new workout
-app.post("/workouts/add", (req, res) =>{
-    //Keep an eye on these curly braces when I start passing data with a nexercise
-    db.Workout.create({ name: req.body.name })
-    .then(dbWorkout => {
-        res.json(dbWorkout);
-    })
-    .catch(({err}) => {
-        res.json(err);
-    });
+app.post("/api/workouts", ({ body }, res) => {
+
+    db.Workout.create({ name: body.name })
+        .then(dbWorkout => {
+            console.log(dbWorkout);
+            res.send(dbWorkout);
+        })
+        .catch(({ err }) => {
+            res.json(err);
+        });
 })
 
 
 // route to get all workouts
-app.get("/workouts", (req, res) =>{
+app.get("/workouts", (req, res) => {
     db.Workout.find({})
-    .then(dbWorkout => {
-        res.json(dbWorkout);
-    })
-    .catch(err => {
-        res.json(err);
-    });
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        });
 });
 
 //Write the route to delete a specific workout
-app.delete("/api/workouts", ({body}, res) => {
-        db.Workout.deleteOne({_id: body._id}, function(err){
-            if(err) throw err;
-            console.log("deleted sucessfully");
-            res.redirect("/")
-        });
+app.delete("/api/workouts", ({ body }, res) => {
+    db.Workout.deleteOne({ _id: body._id }, function (err) {
+        if (err) throw err;
+        console.log("deleted sucessfully");
+        res.redirect("/")
     });
+});
 
 //=========================================================================
 //EXERCISE ROUTES
 //=========================================================================
 
-//TODO:write the route to create a new exercise
-app.post("/api/exercises", ({body}, res) => {
+//write the route to create a new exercise
+app.post("/api/exercises/:id", (req, res) => {
+    const body = req.body
     const newObj = {
-        name: req.body.name,
-        type: req.body.type,
-        weight: req.body.weight,
-        sets: req.body.sets,
-        reps: req.body.reps,
-        duration: req.body.duration,
-        distance: req.body.distance
+        name: body.name,
+        type: body.type,
+        weight: body.weight,
+        sets: body.sets,
+        reps: body.reps,
+        duration: body.duration,
+        distance: body.distance
     }
     db.Exercise.create(newObj)
-    .then(({_id}) => db.Workout.findOneAndUpdate({_id: mongojs.ObjectId(req.params.id)}))
-    .then(dbWorkout => {
-        res.json(dbWorkout);
-    })
-    .catch(err => {
-        console.log(err);
-        res.send(err);
-    })
+    console.log(newObj)
+        .then(({ _id }) => db.Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { exercise: _id } }, { new: true })
+        )
+        .then(dbWorkout => {
+            console.log('dbWorkout', dbWorkout)
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            console.log(err);
+            res.send(err);
+        })
 })
 
-//TODO:Write the route to get all exercises in a workout
-app.get("/exercises", (req, res) =>{
+//Write the route to get all exercises in a workout
+app.get("/exercises", (req, res) => {
     db.Exercise.find({})
-    .then(dbExercise => {
-        res.json(dbExercise);
-    })
-    .catch(err => {
-        res.json(err);
-    });
+        .then(dbExercise => {
+            res.json(dbExercise);
+        })
+        .catch(err => {
+            res.json(err);
+        });
 });
 
-//TODO:Write the route to delete a specific exercise
-app.delete("exercise/:id", function(req, res) {
-    db.Exercise.deleteOne({
-        where:{
-            _id:req.params.id
+app.put("/api/exercises", (req, res) => {
+  
+    db.Exercise.findOneAndUpdate({_id: req.body._id}, req.body, { new: true })
+    .then(dbExercise => {
+        res.send(dbExercise);
+        console.log(dbExercise);
+    })
+    .catch(err => {
+        res.send(err);
+        console.log(err);
+    })
+
+})
+
+// TODO:Write the route to delete a specific exercise
+app.delete("/api/exercise/:id", function (req, res) {
+    db.Exercise.deleteOne(
+        {
+            _id: req.params.id
         }
-    }).then(data=>{
-        if(data===0){
+    ).then(data => {
+        if (data === 0) {
             res.status(404).json(data)
-        }else {
+        } else {
             res.json(data)
         }
-    }).catch(err=>{
+    }).catch(err => {
         console.log(err);
         res.status(500).json(err);
     });
 });
 
-
 app.listen(PORT, () => {
-  console.log(`App running on port ${PORT}!`);
+    console.log(`App running on port ${PORT}!`);
 });

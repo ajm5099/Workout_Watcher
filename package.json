@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ajm5099/Workout_Watcher#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mongojs": "^3.1.0",
     "mongoose": "^5.10.11",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.6"

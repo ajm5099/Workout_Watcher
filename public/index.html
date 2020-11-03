@@ -1,32 +1,77 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Populate Exercise</title>
-    <style>
-      input {
-        display: block;
-        height: 36px;
-        width: 200px;
-        font-size: 24px;
-      }
-      textarea {
-        width: 200px;
-        height: 200px;
-      }
-    </style>
-  </head>
-  <body>
-    <form action="/submit" method="post">
-    <h1>Hi User!</h1>
-    <h2>Enter a Note!</h2>
-      <input type="text" name="title" placeholder="Title">
-      <textarea type="text" name="body" placeholder="Write Note Here"></textarea>
+<html lang="en">
 
-      <input type="submit">
-      <a href="/notes">See your notes!</a>
-      <a href="/user">See your profile!</a>
-      <a href="/populateduser">See your profile, populated with notes!</a>
-    </form>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="user-input">
+
+
+        <div class="workout-entry">
+            <form class="new-workout">
+                <label for="name">Enter Workout:</label>
+                <input type="text" id="new-workout" placeholder="Workout Name">
+                <button type="submit">Enter</button>
+            </form>
+        </div>
+        <div class="exercise-entry">
+            <form class="new-exercise">
+              <div>
+                <label for="exer-name">Enter Exercise Name:</label>
+                <input type="text" name="exer-name" id="exer-name" placeholder="placeholder text">
+              </div>
+                
+              <div>
+                <label for="exer-type">Enter Exercise Type:</label>
+                <input type="text" name="exer-type" id="exer-type" placeholder="placeholder text">
+              </div>
+                
+              <div>
+                <label for="exer-weight">Enter Exercise Weight:</label>
+                <input type="text" name="exer-weight" id="exer-weight" placeholder="placeholder text">
+              </div>
+                
+              <div>
+                <label for="exer-sets">Enter Exercise Sets:</label>
+                <input type="text" name="exer-sets" id="exer-sets" placeholder="placeholder text">
+              </div>
+                
+              <div>
+                <label for="exer-reps">Enter Exercise Reps:</label>
+                <input type="text" name="exer-reps" id="exer-reps" placeholder="placeholder text">
+              </div>
+                
+              <div>
+                <label for="exer-duration">Enter Exercise Duration:</label>
+                <input type="text" name="exer-duration" id="exer-duration" placeholder="placeholder text">
+              </div>
+                
+              <div>
+                <label for="exer-distance">Enter Exercise Distance:</label>
+                <input type="text" name="exer-distance" id="exer-distance" placeholder="placeholder text">
+              </div>
+                
+                <button type="submit">Submit</button>
+    
+            </form>
+        </div>
+
+    </div>
+
+
+    <div class="workout-wrapper">
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+        integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+</body>
+
 </html>
