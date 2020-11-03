@@ -1,0 +1,56 @@
+<div class="workout-box">
+    {{#if workouts}}
+    {{#each workouts}}
+    <div class="workout-block" id="{{_id}}">
+        <div class="workout-name" id="{{_id}}">
+            {{name}}
+        </div>
+        <div class="exercise-block">
+            <form class="create-exercise" id="{{_id}}">
+
+                {{!-- exercise name --}}
+                <div class="form-group">
+                    <label for="exercise-name">Name of Exercise</label>
+                    <input type="text" name="exercise-name">
+                </div>
+
+                {{!-- exercise type --}}
+                <div class="form-group">
+                    <label for="exercise-type">Type of Exercise</label>
+                    <input type="text" name="exercise-type">
+                </div>
+
+                {{!-- exercise weight --}}
+                <div class="form-group">
+                    <label for="exercise-weight">Weight to use</label>
+                    <input type="text" name="exercise-weight">
+                </div>
+
+                {{!-- exercise sets --}}
+                <div class="form-group">
+                    <label for="exercise-sets">Sets to do</label>
+                    <input type="text" name="exercise-name">
+                </div>
+
+                {{!-- exercise reps --}}
+                <div class="form-group">
+                    <label for="exercise-reps">Reps to do</label>
+                    <input type="text" name="exercise-reps">
+                </div>
+
+                {{!-- exercise duration --}}
+                <div class="form-group">
+                    <label for="exercise-duration">How long should you do this exercise for</label>
+                    <input type="text" name="exercise-duration">
+                </div>
+
+                {{!-- exercise distance --}}
+                <div class="form-group">
+                    <label for="exercise-distance">How far should you go</label>
+                    <input type="text" name="exercise-distance">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
