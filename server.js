@@ -2,6 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const mongojs = require("mongojs")
+const handlebars = require("express-handlebars")
 
 const PORT = process.env.PORT || 3000;
 
@@ -10,6 +11,8 @@ const { json } = require("express");
 const { Workout } = require("./models");
 
 const app = express();
+app.engine("handlebars", handlebars({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 app.use(logger("dev"));
 
